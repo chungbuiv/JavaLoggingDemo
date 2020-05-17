@@ -1,0 +1,53 @@
+<configuration>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+<!--             <pattern>%d{HH:mm:ss.SSS} [%thread] %marker %-5level %logger{36} %msg%n</pattern> -->
+			<pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}] %m%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>javaloggingdemo.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}] %m%n</pattern>
+        </encoder>        
+    </appender>
+    
+    <appender name="dailyRollingFileAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>javaloggingdemo_daily.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>javaloggingdemo_daily.%d{yyyy-MM-dd}.tar.gz</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="TRACE">
+        <appender-ref ref="console"/>
+    </root>
+    
+    <logger name="com.nashtechglobal.slf4j.testdebug" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="console"/>
+<!--         <appender-ref ref="fileAppender"/> -->
+        <appender-ref ref="dailyRollingFileAppender"/>
+    </logger>
+    
+<!--     <logger name="com.nashtechglobal.slf4j.testdebug.Debug02" additivity="false"> -->
+<!--         <level value="ERROR"/> -->
+<!--         <appender-ref ref="console"/> -->
+<!--     </logger> -->
+    
+<!--     <logger name="com.nashtechglobal.slf4j.testinfo" additivity="false"> -->
+<!--         <level value="INFO"/> -->
+<!--         <appender-ref ref="console"/> -->
+<!--     </logger> -->
+
+</configuration>
